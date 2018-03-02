@@ -38,6 +38,9 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
     compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion"
 
+    compile "io.envoyproxy.controlplane:api:0.0.7"
+    compile "io.envoyproxy.controlplane:cache:0.0.7"
+
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 
@@ -81,7 +84,7 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Hypergate',
                 'Implementation-Version': version,
-                'Main-Class': 'com.github.plombardi89.hypergate.HypergateKt'
+                'Main-Class': 'hypergate.HypergateKt'
     }
 
     version  = null
