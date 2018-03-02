@@ -1,0 +1,27 @@
+---
+name: hypergate
+namespace: hypergate
+replicas: 1
+
+containers:
+  - dockerfile: Dockerfile
+    context: .
+    rebuild:
+      root: /srv
+      command: ./gradlew test fatJar
+      sources:
+        - build.gradle
+        - settings.gradle
+        - gradle.properties
+        - gradlew
+        - src
+
+profiles:
+  dev:
+    name: {{ branch.replace('/', '-') }}
+  stable:
+    name: stable
+
+branches:
+  master: stable
+  dev/*:  dev
