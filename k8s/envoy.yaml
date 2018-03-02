@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ build.name }}-envoy
+  namespace: {{ service.namespace }}
+  labels:
+    app: envoy
+    profile: {{ build.profile.name }}
+spec:
+  selector:
+    matchLabels:
+      app: envoy
+      profile: {{ build.profile.name }}
+  template:
+    metadata:
+      labels:
+        name: {{ build.name }}-envoy
+    spec:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+      containers:
+        - name: envoy
+          image: {{ service.envoyDockerImage }}
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          ports:
+            - name: http
+              containerPort: 80
+              hostPort: 80
+            - name: https
+              containerPort: 443
+              hostPort: 443
+          volumeMounts:
+            - name: envoy-config
+              mountPath: /etc/envoy/config
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: envoy-config
+          configMap:
+            name: envoy-config

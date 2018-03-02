@@ -1,7 +1,10 @@
 ---
 name: hypergate
 namespace: hypergate
+
 replicas: 1
+
+envoyDockerImage: envoyproxy/envoy-alpine:latest
 
 containers:
   - dockerfile: Dockerfile
