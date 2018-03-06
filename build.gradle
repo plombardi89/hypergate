@@ -1,11 +1,12 @@
 buildscript {
     ext {
+        grpcVersion = "1.10.0"
         jacksonVersion = "2.9.3"
-        kotlinVersion  = "1.2.21"
+        kotlinVersion  = "1.2.30"
         logbackVersion = "1.1.7"
-
         junitVersion = "5.0.0"
         junitGradleVersion = "1.0.1"
+        nettyVersion = '4.1.22.Final'
     }
 
     repositories {
@@ -38,8 +39,17 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
     compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion"
 
+    compile "io.kubernetes:client-java:1.0.0-beta1"
+
     compile "io.envoyproxy.controlplane:api:0.0.7"
     compile "io.envoyproxy.controlplane:cache:0.0.7"
+    compile "io.envoyproxy.controlplane:server:0.0.7"
+
+    compile("io.grpc:grpc-netty:$grpcVersion") {
+        exclude(group: "io.netty") // excluded for 4.1.22 because it fixes JDK 9 warnings around reflective access
+    }
+
+    compile "io.netty:netty-all:$nettyVersion"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
