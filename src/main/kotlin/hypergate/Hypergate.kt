@@ -31,7 +31,7 @@ private fun createServer(): Server {
 
   val discoveryServer = DiscoveryServer(cache)
 
-  return with(NettyServerBuilder.forPort(7000)) {
+  return with(NettyServerBuilder.forPort(5678)) {
     addService(discoveryServer.aggregatedDiscoveryServiceImpl)
     addService(discoveryServer.clusterDiscoveryServiceImpl)
     addService(discoveryServer.endpointDiscoveryServiceImpl)

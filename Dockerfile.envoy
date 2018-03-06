@@ -1,0 +1,6 @@
+FROM envoyproxy/envoy-alpine:latest
+MAINTAINER Philip Lombardi <plombardi89@gmail.com>
+
+RUN apk add --no-cache curl
+ENTRYPOINT ["/usr/local/bin/envoy"]
+CMD ["--help"]
